@@ -2,7 +2,7 @@
 This package allows for easy validation of passed in json.
 Val does not intend to be a robust solution but does seek to cover 95% of use cases.
 Val requires a structure to use pointers for validation. This may seem odd but if a pointer is
-not used you will run into some strange issues since json.Decode() will pass an int type back 
+not used you will run into some strange issues since json.Decode() will pass an int type back
 set as 0 giving no way to tell if a 0 was actually passed in or not. Using a pointer allows to
 check for a nil value before doing the validation and lets you have optional json parameters.
 
@@ -75,7 +75,7 @@ func Validate(obj interface{}) error {
 	// Kill process if obj did not pass in a scruct.
 	// This happens when a pointer passed in.
 	if value.Kind() != reflect.Struct {
-		return nil
+		return errors.New("the value passed in to Validate must be a struct or struct pointer, was " + value.Kind().String())
 	}
 
 	for i := 0; i < typ.NumField(); i++ {
